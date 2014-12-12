@@ -21,7 +21,7 @@ and it should return a response of
 OK
 ```
 
-Now you can connect to the Riak node using HTTP (on `localhost:8098`) or ProtoBufs (on `localhost:8087`).
+Now you can connect to the Riak node in your application using HTTP (on `localhost:8098`) or ProtoBufs (on `localhost:8087`).
 
 **Warning**: The data in Riak is lost when the container is destroyed. If you want the data to persist, then start Riak using:
 
