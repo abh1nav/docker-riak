@@ -1,2 +1,9 @@
 #!/bin/bash
-riak console
+ADDR=$(/sbin/ifconfig eth0 | grep 'inet addr' | cut -d: -f2 | awk '{print $1}')
+chown riak:riak /var/lib/riak /var/log/riak
+chmod 755 /var/lib/riak /var/log/riak
+ulimit -n 4096
+sed -i "s/riak@127.0.0.1/riak@${ADDR}/" /etc/riak/riak.conf
+sed -i "s/127.0.0.1:8098/${ADDR}:8098/g" /etc/riak/riak.conf
+sed -i "s/127.0.0.1:8087/${ADDR}:8087/g" /etc/riak/riak.conf
+exec /sbin/setuser riak "$(ls -d /usr/lib/riak/erts*)/bin/run_erl" "/tmp/riak" "/var/log/riak" "exec /usr/sbin/riak console"
